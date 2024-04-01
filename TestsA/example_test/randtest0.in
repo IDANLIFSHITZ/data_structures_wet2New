@@ -1,0 +1,200 @@
+add_team 39
+add_player 39 4715
+add_player 39 644
+add_team 194
+add_team 69
+add_player 39 2671
+add_player 69 7945
+add_player 39 7093
+add_team 199
+add_player 69 3364
+add_player 69 9662
+add_team 46
+add_team 104
+add_player 194 9916
+add_player 46 8157
+add_player 194 7613
+add_team 153
+add_player 194 1469
+add_player 194 506
+add_team 67
+add_player 153 221
+add_player 104 9767
+add_player 104 3153
+add_player 39 4817
+add_team 74
+add_team 15
+get_highest_ranked_team
+play_match 153 194
+unite_teams 193 199
+play_match 104 39
+play_match 69 153
+unite_teams 46 74
+add_player 39 1868
+num_wins_for_team 39
+remove_newest_player 104
+add_team 24
+add_player 104 1367
+num_wins_for_team 127
+num_wins_for_team 24
+remove_team 61
+unite_teams 67 39
+play_tournament 20856 28858
+unite_teams 113 24
+unite_teams 67 69
+play_tournament 49 69
+remove_newest_player 101
+remove_newest_player 194
+add_player 93 201
+get_highest_ranked_team
+remove_team 153
+num_wins_for_team 107
+add_player 199 7608
+remove_team 93
+remove_team 46
+num_wins_for_team 174
+play_tournament 8054 25116
+play_tournament 8881 41283
+add_player 44 9567
+get_highest_ranked_team
+get_highest_ranked_team
+get_highest_ranked_team
+play_tournament 117 252
+unite_teams 104 24
+get_highest_ranked_team
+add_team 169
+num_wins_for_team 194
+remove_newest_player 169
+play_match 5 12
+get_highest_ranked_team
+remove_team -18
+add_player -7 7146
+play_tournament 191 207
+get_highest_ranked_team
+add_team 183
+unite_teams 152 165
+add_player 104 9480
+remove_team 169
+remove_team 104
+get_highest_ranked_team
+add_team 187
+play_match 194 67
+unite_teams 183 187
+remove_team 194
+add_player 67 1431
+add_player 6 1507
+add_player 184 4791
+unite_teams 183 81
+unite_teams 183 67
+remove_team 15
+play_tournament 397 534175462
+num_wins_for_team 199
+get_highest_ranked_team
+get_highest_ranked_team
+play_tournament 1514 339495265
+remove_newest_player 183
+get_highest_ranked_team
+add_player 199 3488
+remove_newest_player 199
+add_player 183 5278
+play_tournament 5987 151233040
+play_match 183 199
+add_player 183 1867
+add_player 104 5987
+num_wins_for_team 199
+remove_team 199
+remove_team 21
+remove_newest_player 183
+remove_team 183
+play_tournament 172 342
+play_tournament 197 313
+remove_newest_player -6
+add_team 84
+add_team 37
+num_wins_for_team 199
+remove_newest_player -20
+get_highest_ranked_team
+remove_team 84
+get_highest_ranked_team
+remove_team 37
+add_player -15 -18
+play_match 157 -4
+add_team 200
+add_player 66 9322
+unite_teams 181 200
+num_wins_for_team 200
+play_tournament 36 200
+add_player 200 1177
+num_wins_for_team 174
+add_player 200 4379
+add_player 20 4530
+add_team 115
+unite_teams 102 115
+play_tournament 138 233
+add_player -20 -9
+add_player 24 8526
+get_highest_ranked_team
+add_team 200
+play_tournament 158 293
+remove_newest_player 200
+unite_teams 87 115
+play_match -5 37
+remove_newest_player 200
+get_highest_ranked_team
+num_wins_for_team 30
+remove_team 200
+unite_teams 198 146
+num_wins_for_team 88
+unite_teams 58 115
+num_wins_for_team 48
+remove_team 115
+num_wins_for_team 54
+remove_team 21
+unite_teams 116 182
+remove_team 82
+play_match 1 -4
+add_team 80
+get_highest_ranked_team
+add_player 80 5907
+unite_teams 160 80
+play_match -11 1
+add_player 80 8074
+unite_teams 80 119
+remove_team 80
+get_highest_ranked_team
+add_team 92
+play_tournament 184 222
+get_highest_ranked_team
+unite_teams 53 53
+add_team 92
+add_team 15
+remove_team 48
+remove_newest_player 15
+play_match 83 15
+play_match 92 15
+add_player 15 9440
+play_tournament 95 234
+play_match -2 -2
+play_match 28 -12
+remove_newest_player 15
+play_match 110 110
+play_match 51 51
+get_highest_ranked_team
+get_highest_ranked_team
+num_wins_for_team 59
+play_match 15 92
+remove_newest_player -6
+remove_newest_player -18
+remove_newest_player 63
+unite_teams 30 157
+add_player -10 -8
+play_match -11 174
+play_tournament -11 -17
+play_tournament 8601 -15
+add_team 51
+play_tournament 7908 1745
+add_team -1
+remove_team 92
+play_tournament 80 85
+num_wins_for_team -20
+play_tournament 3116 -4
