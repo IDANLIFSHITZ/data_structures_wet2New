@@ -1,0 +1,100 @@
+add_team: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_team: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_team: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_team: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_team: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_team: FAILURE
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_team: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_team: FAILURE
+add_player: SUCCESS
+play_match: SUCCESS, 19
+play_tournament: FAILURE
+play_tournament: SUCCESS, 19
+play_tournament: FAILURE
+add_player: SUCCESS
+play_match: FAILURE
+get_highest_ranked_team: SUCCESS, 601
+play_tournament: SUCCESS, 19
+play_tournament: SUCCESS, 19
+get_highest_ranked_team: SUCCESS, 603
+get_highest_ranked_team: SUCCESS, 603
+play_tournament: SUCCESS, 19
+play_tournament: SUCCESS, 19
+add_player: SUCCESS
+play_tournament: FAILURE
+get_highest_ranked_team: SUCCESS, 605
+play_tournament: FAILURE
+play_tournament: FAILURE
+play_match: SUCCESS, 19
+play_tournament: FAILURE
+play_tournament: SUCCESS, 19
+play_tournament: FAILURE
+add_player: SUCCESS
+add_player: SUCCESS
+remove_newest_player: SUCCESS
+play_tournament: FAILURE
+unite_teams: SUCCESS
+play_match: SUCCESS, 22
+play_match: SUCCESS, 39
+play_tournament: FAILURE
+play_tournament: FAILURE
+add_team: FAILURE
+play_tournament: FAILURE
+add_team: SUCCESS
+play_tournament: FAILURE
+remove_team: SUCCESS
+play_tournament: FAILURE
+play_tournament: FAILURE
+play_tournament: FAILURE
+unite_teams: SUCCESS
+add_player: SUCCESS
+play_tournament: SUCCESS, 22
+play_tournament: SUCCESS, 22
+play_tournament: SUCCESS, 22
+play_tournament: FAILURE
+play_tournament: SUCCESS, 22
+num_wins_for_team: SUCCESS, 1
+get_highest_ranked_team: SUCCESS, 852
+play_tournament: SUCCESS, 22
+play_tournament: SUCCESS, 22
+get_highest_ranked_team: SUCCESS, 852
+add_player: SUCCESS
+play_tournament: SUCCESS, 22
+get_highest_ranked_team: SUCCESS, 852
+unite_teams: SUCCESS
+get_highest_ranked_team: SUCCESS, 852
+play_tournament: SUCCESS, 22
+play_match: SUCCESS, 22
+remove_team: SUCCESS
+play_tournament: FAILURE
+play_tournament: SUCCESS, 22
+add_player: SUCCESS
+num_wins_for_team: SUCCESS, 1
+play_tournament: SUCCESS, 22
+get_highest_ranked_team: SUCCESS, 905
+get_highest_ranked_team: SUCCESS, 905
+get_highest_ranked_team: SUCCESS, 905
+add_team: SUCCESS
+play_tournament: SUCCESS, 22
+play_match: FAILURE

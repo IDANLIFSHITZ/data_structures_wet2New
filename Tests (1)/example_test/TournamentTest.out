@@ -1,0 +1,32 @@
+add_team: SUCCESS
+add_player: SUCCESS
+add_team: SUCCESS
+add_player: SUCCESS
+add_team: SUCCESS
+add_player: SUCCESS
+play_tournament: INVALID_INPUT
+play_tournament: INVALID_INPUT
+play_tournament: INVALID_INPUT
+play_tournament: FAILURE
+add_team: SUCCESS
+add_player: SUCCESS
+play_tournament: SUCCESS, 1
+get_highest_ranked_team: SUCCESS, 12
+num_wins_for_team: SUCCESS, 2
+num_wins_for_team: SUCCESS, 1
+num_wins_for_team: SUCCESS, 0
+num_wins_for_team: SUCCESS, 0
+unite_teams: SUCCESS
+num_wins_for_team: SUCCESS, 2
+get_highest_ranked_team: SUCCESS, 22
+add_team: SUCCESS
+add_player: SUCCESS
+add_team: SUCCESS
+add_player: SUCCESS
+play_tournament: SUCCESS, 2
+num_wins_for_team: SUCCESS, 3
+num_wins_for_team: SUCCESS, 2
+num_wins_for_team: SUCCESS, 0
+num_wins_for_team: SUCCESS, 0
+num_wins_for_team: SUCCESS, 0
+get_highest_ranked_team: SUCCESS, 150

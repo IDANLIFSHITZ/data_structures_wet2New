@@ -1,0 +1,86 @@
+get_highest_ranked_team: SUCCESS, -1
+unite_teams: FAILURE
+play_match: FAILURE
+num_wins_for_team: FAILURE
+play_tournament: FAILURE
+remove_newest_player: FAILURE
+play_tournament: FAILURE
+add_player: FAILURE
+play_tournament: INVALID_INPUT
+add_team: INVALID_INPUT
+add_player: INVALID_INPUT
+remove_team: INVALID_INPUT
+remove_team: INVALID_INPUT
+remove_newest_player: INVALID_INPUT
+add_team: SUCCESS
+add_team: FAILURE
+add_team: SUCCESS
+add_team: FAILURE
+add_team: SUCCESS
+add_team: FAILURE
+remove_team: SUCCESS
+remove_team: FAILURE
+get_highest_ranked_team: SUCCESS, 0
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 33
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 30
+add_player: SUCCESS
+unite_teams: SUCCESS
+unite_teams: FAILURE
+unite_teams: FAILURE
+add_team: SUCCESS
+unite_teams: SUCCESS
+add_team: SUCCESS
+unite_teams: SUCCESS
+add_team: SUCCESS
+add_team: SUCCESS
+unite_teams: SUCCESS
+get_highest_ranked_team: SUCCESS, 66
+remove_newest_player: FAILURE
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 50
+num_wins_for_team: SUCCESS, 0
+num_wins_for_team: SUCCESS, 0
+add_player: SUCCESS
+add_player: SUCCESS
+play_match: SUCCESS, 3
+play_match: FAILURE
+play_match: FAILURE
+play_match: SUCCESS, 3
+num_wins_for_team: SUCCESS, 2
+num_wins_for_team: SUCCESS, 0
+play_tournament: SUCCESS, 3
+play_tournament: SUCCESS, 3
+play_tournament: SUCCESS, 3
+play_tournament: SUCCESS, 3
+num_wins_for_team: SUCCESS, 6
+num_wins_for_team: SUCCESS, 0
+add_team: SUCCESS
+add_team: SUCCESS
+add_team: SUCCESS
+add_team: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+play_tournament: INVALID_INPUT
+play_tournament: INVALID_INPUT
+play_tournament: FAILURE
+play_tournament: FAILURE
+play_tournament: SUCCESS, 3
+unite_teams: SUCCESS
+unite_teams: SUCCESS
+unite_teams: SUCCESS
+unite_teams: SUCCESS
+unite_teams: SUCCESS
+remove_team: FAILURE
+remove_team: SUCCESS
+get_highest_ranked_team: SUCCESS, -1

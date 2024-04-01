@@ -1,0 +1,94 @@
+add_team: SUCCESS
+add_team: SUCCESS
+get_highest_ranked_team: SUCCESS, 0
+unite_teams: INVALID_INPUT
+unite_teams: FAILURE
+unite_teams: SUCCESS
+play_match: FAILURE
+get_highest_ranked_team: SUCCESS, 0
+num_wins_for_team: SUCCESS, 0
+num_wins_for_team: FAILURE
+add_team: SUCCESS
+add_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 1
+add_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 2
+add_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 3
+add_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 4
+add_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 5
+add_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 18
+add_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 14
+add_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 16
+add_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 18
+play_match: FAILURE
+get_highest_ranked_team: SUCCESS, 18
+unite_teams: SUCCESS
+play_match: FAILURE
+get_highest_ranked_team: SUCCESS, 18
+num_wins_for_team: SUCCESS, 0
+num_wins_for_team: FAILURE
+add_team: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+play_match: SUCCESS, 11
+get_highest_ranked_team: SUCCESS, 19
+num_wins_for_team: SUCCESS, 1
+num_wins_for_team: SUCCESS, 0
+unite_teams: SUCCESS
+num_wins_for_team: SUCCESS, 1
+num_wins_for_team: FAILURE
+get_highest_ranked_team: SUCCESS, 25
+remove_newest_player: FAILURE
+get_highest_ranked_team: SUCCESS, 25
+remove_newest_player: FAILURE
+get_highest_ranked_team: SUCCESS, 25
+remove_newest_player: FAILURE
+get_highest_ranked_team: SUCCESS, 25
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 23
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 21
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 19
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 17
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 15
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 19
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 6
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 5
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 4
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 3
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 2
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 0
+remove_newest_player: FAILURE
+get_highest_ranked_team: SUCCESS, 0
+remove_newest_player: FAILURE
+get_highest_ranked_team: SUCCESS, 0
+remove_newest_player: FAILURE
+get_highest_ranked_team: SUCCESS, 0
+remove_newest_player: FAILURE
+get_highest_ranked_team: SUCCESS, 0
+remove_newest_player: FAILURE
+get_highest_ranked_team: SUCCESS, 0
+remove_newest_player: FAILURE
+get_highest_ranked_team: SUCCESS, 0
+remove_team: FAILURE
+remove_team: SUCCESS
+remove_team: FAILURE
+get_highest_ranked_team: SUCCESS, -1

@@ -1,0 +1,39 @@
+get_highest_ranked_team: SUCCESS, -1
+add_team: SUCCESS
+add_team: FAILURE
+get_highest_ranked_team: SUCCESS, 0
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 50
+play_tournament: SUCCESS, 39
+get_highest_ranked_team: SUCCESS, 50
+add_team: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+add_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 50
+play_tournament: SUCCESS, 39
+get_highest_ranked_team: SUCCESS, 51
+play_match: SUCCESS, 39
+get_highest_ranked_team: SUCCESS, 52
+remove_newest_player: SUCCESS
+remove_newest_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 50
+num_wins_for_team: SUCCESS, 2
+num_wins_for_team: FAILURE
+num_wins_for_team: SUCCESS, 0
+remove_team: SUCCESS
+get_highest_ranked_team: SUCCESS, 32
+remove_newest_player: SUCCESS
+remove_newest_player: SUCCESS
+remove_newest_player: SUCCESS
+remove_newest_player: FAILURE
+remove_newest_player: FAILURE
+get_highest_ranked_team: SUCCESS, 0
+add_player: SUCCESS
+get_highest_ranked_team: SUCCESS, 12

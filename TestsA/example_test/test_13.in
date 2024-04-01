@@ -1,0 +1,100 @@
+add_team 19
+add_player 19 41
+add_player 19 26
+add_player 19 29
+add_team 22
+add_player 19 65
+add_player 19 176
+add_player 19 37
+add_team 32
+add_player 22 83
+add_player 32 50
+add_player 19 39
+add_team 39
+add_player 32 30
+add_player 19 146
+add_player 19 179
+add_team 36
+add_player 36 150
+add_player 32 127
+add_player 39 175
+add_team 36
+add_player 39 92
+add_player 19 9
+add_player 22 184
+add_team 24
+add_player 19 50
+add_player 32 30
+add_player 36 158
+add_team 22
+add_player 19 147
+play_match 19 36
+play_tournament 988 4676
+play_tournament 565 1508
+play_tournament 965 16762
+add_player 36 77
+play_match 36 24
+get_highest_ranked_team
+play_tournament 219 9982
+play_tournament 467 15070
+get_highest_ranked_team
+get_highest_ranked_team
+play_tournament 451 2422
+play_tournament 321 7927
+add_player 36 52
+play_tournament 108 14974
+get_highest_ranked_team
+play_tournament 96 15522
+play_tournament 910 18211
+play_match 19 32
+play_tournament 55 5658
+play_tournament 238 13842
+play_tournament 858 13460
+add_player 24 27
+add_player 22 24
+remove_newest_player 32
+play_tournament 347 13058
+unite_teams 19 24
+play_match 22 32
+play_match 39 22
+play_tournament 122 15203
+play_tournament 895 14096
+add_team 22
+play_tournament 797 4624
+add_team 14
+play_tournament 266 17079
+remove_team 36
+play_tournament 718 5627
+play_tournament 727 4221
+play_tournament 743 11078
+unite_teams 22 19
+add_player 22 90
+play_tournament 708 1941
+play_tournament 705 19929
+play_tournament 295 7739
+play_tournament 97 4810
+play_tournament 433 15230
+num_wins_for_team 39
+get_highest_ranked_team
+play_tournament 761 19908
+play_tournament 708 8099
+get_highest_ranked_team
+add_player 39 71
+play_tournament 342 12485
+get_highest_ranked_team
+unite_teams 32 14
+get_highest_ranked_team
+play_tournament 227 11949
+play_match 32 22
+remove_team 32
+play_tournament 973 8048
+play_tournament 696 15432
+add_player 22 27
+num_wins_for_team 39
+play_tournament 200 8940
+get_highest_ranked_team
+get_highest_ranked_team
+get_highest_ranked_team
+add_team 18
+play_tournament 417 6413
+play_match 18 39

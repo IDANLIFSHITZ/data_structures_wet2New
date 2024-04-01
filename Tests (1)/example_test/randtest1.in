@@ -1,0 +1,39 @@
+get_highest_ranked_team
+add_team 39
+add_team 39
+get_highest_ranked_team
+add_player 39 10
+add_player 39 10
+add_player 39 10
+add_player 39 10
+add_player 39 10
+get_highest_ranked_team
+play_tournament 1 100
+get_highest_ranked_team
+add_team 59
+add_player 59 10
+add_player 59 10
+add_player 59 10
+add_player 59 10
+add_player 59 10
+get_highest_ranked_team
+play_tournament 1 100
+get_highest_ranked_team
+play_match 39 59
+get_highest_ranked_team
+remove_newest_player 39
+remove_newest_player 39
+get_highest_ranked_team
+num_wins_for_team 39
+num_wins_for_team 27
+num_wins_for_team 59
+remove_team 59
+get_highest_ranked_team
+remove_newest_player 39
+remove_newest_player 39
+remove_newest_player 39
+remove_newest_player 39
+remove_newest_player 39
+get_highest_ranked_team
+add_player 39 10
+get_highest_ranked_team

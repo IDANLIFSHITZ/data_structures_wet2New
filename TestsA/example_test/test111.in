@@ -1,0 +1,113 @@
+get_highest_ranked_team
+add_team 1
+add_team 2
+add_team 3
+add_team 4
+add_team 5
+add_team 6
+add_team 7
+add_team 8
+add_team 9
+add_team 10
+add_team 112
+add_team 113
+add_team 114
+add_team 115
+add_team 116
+add_team 117
+add_team 118
+add_team 119
+add_team 120
+add_team 121
+add_team 122
+get_highest_ranked_team
+add_player 115 5
+add_player 116 6
+add_player 117 7
+add_player 118 8
+add_player 119 9
+add_player 120 10
+get_highest_ranked_team
+play_tournament 6 10
+play_tournament 7 10
+get_highest_ranked_team
+add_player 1 7
+add_player 2 7
+add_player 3 7
+add_player 4 7
+play_tournament 6 9
+play_tournament 6 9
+get_highest_ranked_team
+num_wins_for_team 115
+num_wins_for_team 116
+num_wins_for_team 117
+num_wins_for_team 118
+num_wins_for_team 119
+num_wins_for_team 120
+num_wins_for_team 1
+num_wins_for_team 2
+num_wins_for_team 3
+num_wins_for_team 4
+add_player 10 3
+add_player 9 3
+add_player 8 3
+add_player 7 3
+add_player 6 3
+add_player 5 3
+add_player 10 7
+add_player 9 7
+add_player 8 7
+add_player 7 7
+add_player 6 7
+add_player 5 7
+get_highest_ranked_team
+num_wins_for_team 115
+num_wins_for_team 116
+num_wins_for_team 117
+num_wins_for_team 118
+num_wins_for_team 119
+num_wins_for_team 120
+num_wins_for_team 1
+num_wins_for_team 2
+num_wins_for_team 3
+num_wins_for_team 4
+remove_newest_player 119
+num_wins_for_team 119
+get_highest_ranked_team
+remove_newest_player 5
+remove_newest_player 6
+remove_newest_player 7
+remove_newest_player 8
+remove_newest_player 9
+remove_newest_player 10
+get_highest_ranked_team
+add_player 119 9
+num_wins_for_team 119
+get_highest_ranked_team
+remove_team 112
+remove_team 113
+remove_team 114
+remove_team 115
+remove_team 116
+remove_team 117
+remove_team 118
+remove_team 119
+remove_team 120
+remove_team 121
+remove_team 122
+get_highest_ranked_team
+add_player 5 4
+add_player 6 7
+get_highest_ranked_team
+num_wins_for_team 5
+num_wins_for_team 6
+play_match 5 6
+num_wins_for_team 5
+num_wins_for_team 6
+get_highest_ranked_team
+play_tournament 8 100
+num_wins_for_team 5
+num_wins_for_team 6
+get_highest_ranked_team
+play_tournament 9 100
+num_wins_for_team 6
