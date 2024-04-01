@@ -135,6 +135,9 @@ StatusType olympics_t::add_player(int teamId, int playerStrength)
     // the team we need to add to
     Team* teamToAddPlayer = out.ans();
 
+    // remove the team from the tree, so it can be reinserted with the new strength
+    teamsTree->remove(Pair<int,int>(teamToAddPlayer->getStrength(), teamId));
+
     // add the player to the team
     StatusType status = teamToAddPlayer->addPlayer(playerStrength);
     if (status != StatusType::SUCCESS)
@@ -142,6 +145,12 @@ StatusType olympics_t::add_player(int teamId, int playerStrength)
         return status;
     }
 
+    // reinsert the team to the tree with the new strength
+    status = teamsTree->insert(teamToAddPlayer, Pair<int,int>(teamToAddPlayer->getStrength(), teamId));
+    if (status != StatusType::SUCCESS)
+    {
+        return status;
+    }
 	return StatusType::SUCCESS;
 }
 
@@ -190,8 +199,8 @@ output_t<int> olympics_t::play_match(int teamId1, int teamId2)
     {
         return StatusType::FAILURE;
     }
-    int team1Strength = team1->getStrength() * team1->getNumOfPlayers();
-    int team2Strength = team2->getStrength() * team2->getNumOfPlayers();
+    int team1Strength = team1->getStrength();
+    int team2Strength = team2->getStrength();
 
     if (team1Strength > team2Strength)
     {
@@ -260,7 +269,6 @@ StatusType olympics_t::unite_teams(int teamId1, int teamId2)
     Team* team1 = outTeam1.ans();
     Team* team2 = outTeam2.ans();
 
-    team1->uniteTeams(team2);
     StatusType status =  teamsTable->remove(teamId2);
     if (status != StatusType::SUCCESS)
     {
@@ -271,6 +279,8 @@ StatusType olympics_t::unite_teams(int teamId1, int teamId2)
     {
         return status;
     }
+    team1->uniteTeams(team2);
+
     numOfTeams--;
 
     return StatusType::SUCCESS;

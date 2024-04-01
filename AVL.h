@@ -1034,7 +1034,7 @@ public:
             }
         }
 
-        if (currNode->key == prevBiggestKey)
+        if (currNode != nullptr && currNode->key == prevBiggestKey)
         {
             if (leftTurnLast)
             {
