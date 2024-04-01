@@ -224,5 +224,5 @@ int Team::getStrength() const
         return 0;
     }
     Player* player = playersTree->get_median();
-    return player->getStrength();
+    return player->getStrength() * numOfPlayers;
 }
