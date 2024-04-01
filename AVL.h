@@ -708,15 +708,17 @@ private:
 
         int numOfSmaller = 0;
         currNode = currNode->right;
+        if (currNode == nullptr)
+        {
+            return 0;
+        }
         numOfSmaller = (currNode->left != nullptr) ?
                        currNode->left->subtreeSize+1 : 1;
         while (currNode != nullptr && this->calc_power(currNode->data) != forceToSearch)
         {
             currNode = currNode->left;
         }
-        return numOfSmaller + get_number_of_smaller_nodes_of_next_min_force(currNode, forceToSearch);
-
-
+        return numOfSmaller + get_number_of_smaller_nodes_of_next_max_force(currNode, forceToSearch);
     }
 
 public:
@@ -977,6 +979,7 @@ public:
         Node* currNode = this->root;
         Node* lastRightTurn = nullptr;
 
+        //this while finds biggest key in tree which is smaller than keyToFind.
         while(currNode != nullptr)
         {
             pathExtra += currNode->extra;
@@ -984,7 +987,7 @@ public:
             {
                 if (currNode->left == nullptr)
                 {
-                    if (lastRightTurn == nullptr)
+                    if (lastRightTurn == nullptr) //if only went left on tree.
                     {
                         return;
                     }
