@@ -491,7 +491,7 @@ private:
      * returns biggest node in tree with root of currNode.
      * assumes tree is not empty.
      */
-    Node *get_max_node(Node *node) {
+    Node* get_max_node(Node *node) {
         while (node->right != nullptr) //while there is a right child.
         {
             node = node->right;
@@ -969,12 +969,11 @@ public:
     }
 
     /*
-     * updates extra field in node with key=keyToFind
+     * updates extra field to every node with key<keyToFind.
      * and conserves integrity of tree.
      */
     void update_extra(keyT keyToFind, int change)
     {
-        int pathExtra = 0;
         keyT prevBiggestKey;
         Node* currNode = this->root;
         Node* lastRightTurn = nullptr;
@@ -982,10 +981,9 @@ public:
         //this while finds biggest key in tree which is smaller than keyToFind.
         while(currNode != nullptr)
         {
-            pathExtra += currNode->extra;
             if (currNode->key > keyToFind)  //if keyToFind belongs in left subtree.
             {
-                if (currNode->left == nullptr)
+                if (currNode->left == nullptr) //if has no left child.
                 {
                     if (lastRightTurn == nullptr) //if only went left on tree.
                     {
@@ -1007,33 +1005,30 @@ public:
             else //if node in tree.
             {
                 prevBiggestKey = currNode->key;
-                pathExtra += currNode->extra;
                 break;
             }
         }
 
-        //update pathExtra.
-        bool isLastTurnLeft = true;
+        //
         currNode = root;
+        bool leftTurnLast = true;
         while (currNode != nullptr && currNode->key != prevBiggestKey)
         {
             if (currNode->key > prevBiggestKey)
             {
-                if (!isLastTurnLeft)
+                if (!leftTurnLast)
                 {
                     currNode->extra -= change;
-                    pathExtra -= change;
-                    isLastTurnLeft = true;
+                    leftTurnLast = true;
                 }
                 currNode = currNode->left;
             }
             else
             {
-                if (isLastTurnLeft)
+                if (leftTurnLast)
                 {
                     currNode->extra += change;
-                    pathExtra += change;
-                    isLastTurnLeft = false;
+                    leftTurnLast = false;
                 }
                 currNode = currNode->right;
             }
@@ -1041,23 +1036,21 @@ public:
 
         if (currNode->key == prevBiggestKey)
         {
-            if (isLastTurnLeft)
+            if (leftTurnLast)
             {
                 currNode->extra += change;
-                pathExtra += change;
             }
             if (currNode->right != nullptr)
             {
                 currNode->right->extra -= change;
                 currNode = currNode->right;
             }
-            pathExtra += currNode->extra;
         }
 
+        //update maxSubtreeRank in every node in search roure
         while (currNode != nullptr)
         {
             this->update_maxSubtreeRank(currNode);
-            pathExtra -= currNode->extra;
             currNode = currNode->parent;
         }
     }

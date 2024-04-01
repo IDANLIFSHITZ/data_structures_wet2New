@@ -14,7 +14,6 @@ add_executable(a
         main24a2.cpp
         olympics24a2.cpp
         olympics24a2.h
-        Pair.cpp
         Pair.h
         Player.cpp
         Player.h
