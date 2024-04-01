@@ -149,7 +149,6 @@ StatusType hashTable::remove(int key)
 }
 
 
-// TODO: resize
 StatusType hashTable::resize(int newSize)
 {
     if (newSize == 0)
