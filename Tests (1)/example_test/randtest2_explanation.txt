@@ -1,2 +1,0 @@
-playing tournament between 8 teams
-checking correct ranking for each team that played
