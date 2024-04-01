@@ -1,3 +1,4 @@
+
 //
 // Created by yuval on 3/27/2024.
 //
@@ -8,7 +9,8 @@
 int hashTable::hashFunction(int key, int size)
 {
     if (size != 0)
-    return key % size;
+        return key % size;
+    return 0;
 }
 
 hashTable::hashTable() : maxSize(0), currSize(0), table(nullptr)
@@ -148,7 +150,6 @@ StatusType hashTable::remove(int key)
     return StatusType::SUCCESS;
 }
 
-
 StatusType hashTable::resize(int newSize)
 {
     if (newSize == 0)
@@ -181,10 +182,10 @@ StatusType hashTable::resize(int newSize)
     {
         if (table[i] == nullptr)
             // assert (table[i]->get_size() == 0)
-            {
-                delete table[i];
-                continue;
-            }
+        {
+            delete table[i];
+            continue;
+        }
         AVL<Team*, int>* current = table[i];
 
         try
