@@ -508,7 +508,7 @@ private:
         Node* childNode = (nodeToRemove->left != nullptr) ?
                           nodeToRemove->left : nodeToRemove->right;
         Node* parentNode = nodeToRemove->parent;
-        if (parentNode == nullptr) //if nodeToRemove is root of tree.
+        if (this->root == nodeToRemove) //if nodeToRemove is root of tree.
         {
             this->root = childNode; //update root.
         }
