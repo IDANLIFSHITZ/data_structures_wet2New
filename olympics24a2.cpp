@@ -136,10 +136,13 @@ StatusType olympics_t::add_player(int teamId, int playerStrength)
     Team* teamToAddPlayer = out.ans();
 
     // remove the team from the tree, so it can be reinserted with the new strength
-    teamsTree->remove(Pair<int,int>(teamToAddPlayer->getStrength(), teamId));
-
+    StatusType status = teamsTree->remove(Pair<int,int>(teamToAddPlayer->getStrength(), teamId));
+    if (status != StatusType::SUCCESS)
+    {
+        return status;
+    }
     // add the player to the team
-    StatusType status = teamToAddPlayer->addPlayer(playerStrength);
+    status = teamToAddPlayer->addPlayer(playerStrength);
     if (status != StatusType::SUCCESS)
     {
         return status;
