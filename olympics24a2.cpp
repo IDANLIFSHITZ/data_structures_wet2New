@@ -258,20 +258,25 @@ StatusType olympics_t::unite_teams(int teamId1, int teamId2)
     {
         return StatusType::INVALID_INPUT;
     }
+
+    // team1 is in table
     output_t<Team*> outTeam1 = teamsTable->find(teamId1);
     if (outTeam1.status() != StatusType::SUCCESS)
     {
         return StatusType::FAILURE;
     }
 
+    // team2 is in table
     output_t<Team*> outTeam2 = teamsTable->find(teamId2);
     if (outTeam2.status() != StatusType::SUCCESS)
     {
         return StatusType::FAILURE;
     }
+
     Team* team1 = outTeam1.ans();
     Team* team2 = outTeam2.ans();
 
+    // remove team2 from the table and the tree
     StatusType status =  teamsTable->remove(teamId2);
     if (status != StatusType::SUCCESS)
     {
@@ -282,8 +287,33 @@ StatusType olympics_t::unite_teams(int teamId1, int teamId2)
     {
         return status;
     }
+
+    // remove team1 from the table and the tree, so it can go in with the new strength
+    status = teamsTable->remove(teamId1);
+    if (status != StatusType::SUCCESS)
+    {
+        return status;
+    }
+    status = teamsTree->remove(Pair<int,int>(team1->getStrength(), -teamId1));
+    if (status != StatusType::SUCCESS)
+    {
+        return status;
+    }
+
+    // unite the teams
     team1->uniteTeams(team2);
 
+    // reinsert team1 to the table and the tree with the new strength
+    status = teamsTable->add(team1, teamId1);
+    if (status != StatusType::SUCCESS)
+    {
+        return status;
+    }
+    status = teamsTree->insert(team1, Pair<int,int>(team1->getStrength(), -teamId1));
+    if (status != StatusType::SUCCESS)
+    {
+        return status;
+    }
     numOfTeams--;
 
     return StatusType::SUCCESS;
