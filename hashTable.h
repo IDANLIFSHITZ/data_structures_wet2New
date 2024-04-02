@@ -13,7 +13,6 @@
 // the hash table will resize itself when it is more than 50% full or less than 25% full
 class hashTable {
 private:
-    int x;
     int currSize;
     int maxSize;
     AVL<Team*, int>** table;

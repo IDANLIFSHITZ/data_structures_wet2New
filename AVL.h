@@ -187,6 +187,10 @@ private:
                 leftNode->parent->right = leftNode;
             }
         }
+        else
+        {
+            this->root = leftNode;
+        }
 
         /*
          * part 2: update heights, subtreeSizeRank, max.
@@ -260,6 +264,10 @@ private:
             {
                 rightNode->parent->right = rightNode;
             }
+        }
+        else
+        {
+            this->root = rightNode;
         }
 
         /*
@@ -912,7 +920,7 @@ public:
 
             nodeToRemove->key = nextBiggest->key;
             nodeToRemove->data = nextBiggest->data;
-            nodeToRemove->extra += nextBiggestExtra - extra;
+            nodeToRemove->extra = nextBiggestExtra;
 
             if (nodeToRemove->left != nullptr)
             {
@@ -940,7 +948,7 @@ public:
             Node::update_node_height(nodeToRemove);
             Node::update_subtreeSize(nodeToRemove);
             this->update_maxSubtreeRank(nodeToRemove);
-            this->balance(nodeToRemove);
+            nodeToRemove = this->balance(nodeToRemove);
 
             nodeToRemove = nodeToRemove->parent;
         }
@@ -1010,11 +1018,11 @@ public:
         }
 
         //
-        currNode = root;
+        currNode = this->root;
         bool leftTurnLast = true;
         while (currNode != nullptr && currNode->key != prevBiggestKey)
         {
-            if (currNode->key > prevBiggestKey)
+            if (currNode->key > prevBiggestKey) //if prevBiggestKey in left subtree.
             {
                 if (!leftTurnLast)
                 {
@@ -1023,7 +1031,7 @@ public:
                 }
                 currNode = currNode->left;
             }
-            else
+            else //else, prevBiggestKey in right subtree.
             {
                 if (leftTurnLast)
                 {

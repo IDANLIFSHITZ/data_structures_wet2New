@@ -37,7 +37,7 @@ public:
 
     bool operator!=(const Pair<T, S>& pair)
     {
-        return ((this->first != pair.second) || (this->second != pair.second));
+        return ((this->first != pair.first) || (this->second != pair.second));
     }
 
     bool operator<(const Pair<T, S>& pair)
