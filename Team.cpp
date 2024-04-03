@@ -13,7 +13,10 @@ Team::Team(int id) : id(id), playersList(new LinkedList()),
 Team::~Team()
 {
     delete playersList;
-    playersTree->clear();
+    if (playersTree != nullptr)
+    {
+        playersTree->clear();
+    }
     delete playersTree;
 }
 
