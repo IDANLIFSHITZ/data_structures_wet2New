@@ -147,7 +147,6 @@ StatusType mergeArrays(Player** arr1, int size1, Player** arr2, int size2, Playe
     int indexArr1 = 0, indexArr2 = 0, indexNew = 0;
     while (indexArr1 < size1 && indexArr2 < size2)
     {
-
         if (*arr1[indexArr1] < *arr2[indexArr2])
         {
             mergedPlayerArr[indexNew] = arr1[indexArr1];
