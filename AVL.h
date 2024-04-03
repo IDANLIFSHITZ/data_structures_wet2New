@@ -139,23 +139,15 @@ private:
                           node->left->maxSubtreeRank : 0;
         int maxRankRight = (node->right != nullptr) ? // get right maxSubtreeRank.
                            node->right->maxSubtreeRank : 0;
-        /*
         node->maxSubtreeRank = AVL::max(currRank, AVL::max(maxRankLeft, maxRankRight)); //calc maxSubtreeRank.
         node->maxSubtreeRank += (node->maxSubtreeRank != 0) ?
                                 node->extra : 0;
-        */
-        int max = AVL::max(currRank, AVL::max(maxRankLeft, maxRankRight)); //calc maxSubtreeRank.
-        node->maxSubtreeRank = max;
-        if (max != 0)
-        {
-            node->maxSubtreeRank += node->extra;
-        }
     }
 
     /*
      * executes right rotate. returns original left node.
      */
-    Node *right_rotate(Node *nodeToRotate)
+    Node* right_rotate(Node *nodeToRotate)
     {
         /*
          * part 1: rotate.
@@ -345,7 +337,10 @@ private:
                 nodeToBalance = left_rotate(nodeToBalance);
             }
         }
-        this->update_maxSubtreeRank(nodeToBalance);
+        if (nodeToBalance != nullptr)
+        {
+            this->update_maxSubtreeRank(nodeToBalance);
+        }
         return nodeToBalance;
     }
 
@@ -964,7 +959,7 @@ public:
 
         // climb up the tree to the root and update and balance.
         Node* currNode = nodeToRemove;
-        while (nodeToRemove != nullptr)
+        while (currNode != nullptr)
         {
             Node::update_node_height(currNode);
             Node::update_subtreeSize(currNode);
