@@ -124,16 +124,13 @@ StatusType olympics_t::add_player(int teamId, int playerStrength)
     int saveWins = this->teamsTree->calc_extra_in_path(teamKey);
 
     // remove the team from the tree, so it can be reinserted with the new strength
-    StatusType status = teamsTree->remove(teamKey);
-    if (status != StatusType::SUCCESS)
-    {
-        return status;
-    }
-    // add the player to the team
+    this->teamsTree->remove(teamKey);
 
-    status = teamToAddPlayer->addPlayer(playerStrength);
+    // add the player to the team
+    StatusType status = teamToAddPlayer->addPlayer(playerStrength);
     if (status != StatusType::SUCCESS)
     {
+        this->teamsTree->insert(teamToAddPlayer, teamKey);
         return status;
     }
 
@@ -171,18 +168,14 @@ StatusType olympics_t::remove_newest_player(int teamId)
 
     // remove the player from the team
     StatusType status = teamToRemovePlayer->removeNewestPlayer();
+    //return team to teamsTree.
+    teamKey.set_first(teamToRemovePlayer->getStrength());
+    this->teamsTree->insert(teamToRemovePlayer, teamKey);
     if (status != StatusType::SUCCESS)
     {
         return status;
     }
 
-    //return team to teamsTree.
-    teamKey.set_first(teamToRemovePlayer->getStrength());
-    status = this->teamsTree->insert(teamToRemovePlayer, teamKey);
-    if (status != StatusType::SUCCESS)
-    {
-        return status;
-    }
 
     this->increase_win(teamToRemovePlayer, saveWins);
 	return StatusType::SUCCESS;
@@ -272,39 +265,23 @@ StatusType olympics_t::unite_teams(int teamId1, int teamId2)
     Team* team2 = outTeam2.ans();
 
     // remove team2 from the table and the tree
-    StatusType status =  teamsTable->remove(teamId2);
-    if (status != StatusType::SUCCESS)
-    {
-        return status;
-    }
-    status = teamsTree->remove(Pair<int,int>(team2->getStrength(), -teamId2));
-    if (status != StatusType::SUCCESS)
-    {
-        return status;
-    }
+    teamsTable->remove(teamId2);
+    teamsTree->remove(Pair<int,int>(team2->getStrength(), -teamId2));
 
     // remove team1 from the table and the tree, so it can go in with the new strength
     Pair<int,int> team1Key = Pair<int,int>(team1->getStrength(), -teamId1);
     int saveWins = this->teamsTree->calc_extra_in_path(team1Key);
-    status = teamsTree->remove(team1Key);
-    if (status != StatusType::SUCCESS)
-    {
-        return status;
-    }
+    this->teamsTree->remove(team1Key);
 
     // unite the teams
     team1->uniteTeams(team2);
 
     // reinsert team1 to the table and the tree with the new strength
     team1Key.set_first(team1->getStrength());
-    status = teamsTree->insert(team1, team1Key);
+    StatusType status = teamsTree->insert(team1, team1Key);
     this->increase_win(team1, saveWins);
-    if (status != StatusType::SUCCESS)
-    {
-        return status;
-    }
 
-    return StatusType::SUCCESS;
+    return status;
 }
 
 /*

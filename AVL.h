@@ -1186,7 +1186,8 @@ public:
      */
     int get_maxSubtreeRank()
     {
-        return (this->root != nullptr) ? this->root->maxSubtreeRank : 0;
+        int x = (this->root != nullptr) ? this->root->maxSubtreeRank : 0;
+        return x;
     }
 
     /*
