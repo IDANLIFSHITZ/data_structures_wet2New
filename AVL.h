@@ -400,6 +400,7 @@ private:
 
     /*
      * returns first Node with force=force.
+     * if doesn't exist returns closest.
      */
     Node* search_by_force(Node* currNode, int force, int& numOfSmaller) const
     {
@@ -700,6 +701,10 @@ private:
                             currNode->left->subtreeSize+1 : 1;
             currNode = currNode->right;
         }
+        if (currNode == nullptr)
+        {
+            return 0;
+        }
         return numOfSmaller + get_number_of_smaller_nodes_of_next_min_force(currNode, forceToSearch);
     }
 
@@ -725,6 +730,11 @@ private:
         while (currNode != nullptr && this->calc_power(currNode->data) != forceToSearch)
         {
             currNode = currNode->left;
+        }
+
+        if (currNode == nullptr)
+        {
+            return 0;
         }
         return numOfSmaller + get_number_of_smaller_nodes_of_next_max_force(currNode, forceToSearch);
     }
@@ -764,10 +774,12 @@ public:
                                                           calc_power([](const valT&)->int{return 0;})
     {
         this->root = this->sorted_array_to_tree_aux(values, keys, 0, this->numOfNodes-1); //builds tree from sorted array.
-
-        //get min and max nodes from built tree.
-        this->minNode = this->get_min_node(this->root);
-        this->maxNode = this->get_max_node(this->root);
+        if (size != 0)
+        {
+            //get min and max nodes from built tree.
+            this->minNode = this->get_min_node(this->root);
+            this->maxNode = this->get_max_node(this->root);
+        }
     }
 
     /*
@@ -1066,10 +1078,10 @@ public:
     /*
      * updates extra in all nodes in range between low and high keys.
      */
-    void update_extra_in_range(keyT lowKey, keyT highKet, int change)
+    void update_extra_in_range(keyT lowKey, keyT highKey, int change)
     {
         this->update_extra(lowKey, -change);
-        this->update_extra(highKet, change);
+        this->update_extra(highKey, change);
     }
 
     /*
@@ -1163,7 +1175,7 @@ public:
             }
             else
             {
-                return currNode->data;
+                return output_t<valT>(currNode->data);
             }
         }
         return output_t<valT>(StatusType::FAILURE);

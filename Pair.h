@@ -74,11 +74,27 @@ public:
     }
 
     /*
+     * updates first item in pair.
+     */
+    void set_first(T newT)
+    {
+        this->first = newT;
+    }
+
+    /*
      * returns second item in pair.
      */
     S get_second() const
     {
         return this->second;
+    }
+
+    /*
+     * returns second item in pair.
+     */
+    void set_second(S newS)
+    {
+        this->second = newS;
     }
 };
 

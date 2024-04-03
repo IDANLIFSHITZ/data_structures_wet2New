@@ -71,11 +71,11 @@ StatusType LinkedList::uniteLists(LinkedList *other) {
 
     // override the id of the players in the list
     Node* current = other->head;
-    int idInc = 1;
-    while (current != nullptr)
+    int idInc = other->size-1;
+    while (current != this->head)
     {
-        current->player->setId(idInc+other->size);
-        idInc++;
+        current->player->setId(idInc+this->size);
+        idInc--;
         current = current->next;
     }
 

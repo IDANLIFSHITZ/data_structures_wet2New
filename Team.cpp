@@ -169,6 +169,7 @@ StatusType Team::uniteTeams(Team* other){
     delete[] unitedPlayersArray;
     delete[] unitedKeysArray;
 
+    this->numOfPlayers = this->playersList->size;
     return StatusType::SUCCESS;
 }
 

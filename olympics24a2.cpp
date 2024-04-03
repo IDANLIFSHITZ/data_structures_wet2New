@@ -7,13 +7,14 @@
 
 void olympics_t::increase_win(Team* team, int change)
 {
-    Pair<int,int> teamKey = Pair<int,int>(team->getStrength(), team->getId());
+    Pair<int,int> teamKey = Pair<int,int>(team->getStrength(), -team->getId());
     this->teamsTree->update_extra(teamKey, change);
     int numOfSmallerTeams = this->teamsTree->get_num_of_smaller_nodes( teamKey);
-    auto nextSmallestTeam = this->teamsTree->search_number_of_smaller_nodes(numOfSmallerTeams-1);
+    output_t<Team*> nextSmallestTeam = this->teamsTree->search_number_of_smaller_nodes(numOfSmallerTeams-1);
+
     if (nextSmallestTeam.status() == StatusType::SUCCESS)
     {
-        Pair<int,int> nextSmallestTeamKey = Pair<int,int>(nextSmallestTeam.ans()->getStrength(), nextSmallestTeam.ans()->getId());
+        Pair<int,int> nextSmallestTeamKey = Pair<int,int>(nextSmallestTeam.ans()->getStrength(), -nextSmallestTeam.ans()->getId());
         this->teamsTree->update_extra(nextSmallestTeamKey, -1*change);
     }
 }
@@ -23,13 +24,7 @@ void olympics_t::increase_win(Team* team, int change)
  */
 
 olympics_t::olympics_t(): teamsTable(new hashTable()),
-                          teamsTree(new AVL<Team*, Pair<int,int>>([](const Team* team){if (team->getNumOfPlayers() == 0)
-                                                                      {
-                                                                          return 0;
-                                                                      }return team->getStrength();})),
-                          numOfTeams(0)
-{
-}
+                          teamsTree(new AVL<Team*, Pair<int,int>>([](const Team* team){if(team->getNumOfPlayers()== 0){return 0;}return team->getStrength();})){}
 
 olympics_t::~olympics_t()
 {
@@ -62,18 +57,12 @@ StatusType olympics_t::add_team(int teamId)
         {
             return status;
         }
-        status = teamsTree->insert(team, Pair<int,int>(team->getStrength(), -teamId));
-        if (status != StatusType::SUCCESS)
-        {
-            return status;
-        }
-        numOfTeams++;
+        return teamsTree->insert(team, Pair<int,int>(team->getStrength(), -teamId));
     }
-    catch (const std::bad_alloc& e)
+    catch (const std::bad_alloc& err)
     {
         return StatusType::ALLOCATION_ERROR;
     }
-    return StatusType::SUCCESS;
 }
 
 StatusType olympics_t::remove_team(int teamId)
@@ -111,9 +100,6 @@ StatusType olympics_t::remove_team(int teamId)
 
     // free the players of the team
     delete teamToDelete;
-
-    numOfTeams--;
-
     return StatusType::SUCCESS;
 }
 
@@ -134,14 +120,17 @@ StatusType olympics_t::add_player(int teamId, int playerStrength)
 
     // the team we need to add to
     Team* teamToAddPlayer = out.ans();
+    Pair<int,int> teamKey = Pair<int,int>(teamToAddPlayer->getStrength(), -teamId);
+    int saveWins = this->teamsTree->calc_extra_in_path(teamKey);
 
     // remove the team from the tree, so it can be reinserted with the new strength
-    StatusType status = teamsTree->remove(Pair<int,int>(teamToAddPlayer->getStrength(), -teamId));
+    StatusType status = teamsTree->remove(teamKey);
     if (status != StatusType::SUCCESS)
     {
         return status;
     }
     // add the player to the team
+
     status = teamToAddPlayer->addPlayer(playerStrength);
     if (status != StatusType::SUCCESS)
     {
@@ -149,12 +138,12 @@ StatusType olympics_t::add_player(int teamId, int playerStrength)
     }
 
     // reinsert the team to the tree with the new strength
-    status = teamsTree->insert(teamToAddPlayer, Pair<int,int>(teamToAddPlayer->getStrength(), -teamId));
-    if (status != StatusType::SUCCESS)
-    {
-        return status;
-    }
-	return StatusType::SUCCESS;
+    teamKey.set_first(teamToAddPlayer->getStrength());
+    status = teamsTree->insert(teamToAddPlayer, teamKey);
+    Pair<int,int> lowKey = Pair<int,int>(teamKey.get_first(), teamKey.get_second()-1);
+    teamsTree->update_extra_in_range(lowKey, teamKey, saveWins);
+
+	return status;
 }
 
 StatusType olympics_t::remove_newest_player(int teamId)
@@ -175,21 +164,38 @@ StatusType olympics_t::remove_newest_player(int teamId)
     // the team we need to remove the player from
     Team* teamToRemovePlayer = out.ans();
 
+    //save number of wins of team and remove team from teamsTree.
+    Pair<int,int> teamKey = Pair<int,int>(teamToRemovePlayer->getStrength(), -teamId);
+    int saveWins = this->teamsTree->calc_extra_in_path(teamKey);
+    this->teamsTree->remove(teamKey);
+
     // remove the player from the team
     StatusType status = teamToRemovePlayer->removeNewestPlayer();
     if (status != StatusType::SUCCESS)
     {
         return status;
     }
+
+    //return team to teamsTree.
+    teamKey.set_first(teamToRemovePlayer->getStrength());
+    status = this->teamsTree->insert(teamToRemovePlayer, teamKey);
+    if (status != StatusType::SUCCESS)
+    {
+        return status;
+    }
+
+    this->increase_win(teamToRemovePlayer, saveWins);
 	return StatusType::SUCCESS;
 }
 
 output_t<int> olympics_t::play_match(int teamId1, int teamId2)
 {
-    if (teamId1 <= 0 || teamId2 <= 0 || teamId1 == teamId2)
+    if (teamId1 <= 0 || teamId2 <= 0 || teamId1 == teamId2) //if invalid input.
     {
         return StatusType::INVALID_INPUT;
     }
+
+    //find teams.
     output_t<Team*> outTeam1 = teamsTable->find(teamId1);
     output_t<Team*> outTeam2 = teamsTable->find(teamId2);
     if (outTeam1.status() != StatusType::SUCCESS || outTeam2.status() != StatusType::SUCCESS)
@@ -202,25 +208,17 @@ output_t<int> olympics_t::play_match(int teamId1, int teamId2)
     {
         return StatusType::FAILURE;
     }
+
+    //get teams strength and increase win to winning team.
     int team1Strength = team1->getStrength();
     int team2Strength = team2->getStrength();
-
-    if (team1Strength > team2Strength)
+    if (team1Strength > team2Strength || (team1Strength == team2Strength && teamId1 < teamId2))
     {
         increase_win(team1);
         return teamId1;
     }
-    else if (team1Strength < team2Strength)
-    {
-        increase_win(team2);
-        return teamId2;
-    }
-    else
-    {
-        int idOfTeamWithLowerId = team1->getId() > team2->getId() ? teamId2 : teamId1;
-        increase_win(teamsTable->find(idOfTeamWithLowerId).ans(), 1);
-        return idOfTeamWithLowerId;
-    }
+    increase_win(team2);
+    return teamId2;
 }
 
 output_t<int> olympics_t::num_wins_for_team(int teamId)
@@ -230,12 +228,13 @@ output_t<int> olympics_t::num_wins_for_team(int teamId)
         return StatusType::INVALID_INPUT;
     }
 
-    auto team = this->teamsTable->find(teamId);
+    output_t<Team*> team = this->teamsTable->find(teamId);
     if (team.status() != StatusType::SUCCESS)
     {
         return team.status();
     }
-    return this->teamsTree->calc_extra_in_path(Pair<int,int>(team.ans()->getStrength(), -team.ans()->getId()));
+    Pair<int,int> teamKey = Pair<int,int>(team.ans()->getStrength(), -(team.ans()->getId()));
+    return this->teamsTree->calc_extra_in_path(teamKey);
 }
 
 output_t<int> olympics_t::get_highest_ranked_team()
@@ -243,10 +242,6 @@ output_t<int> olympics_t::get_highest_ranked_team()
 	if (this->teamsTable->isEmpty())
     {
         return -1;
-    }
-    if (this->teamsTree->get_size() == 0)
-    {
-        return 0;
     }
     return output_t<int>(this->teamsTree->get_maxSubtreeRank());
 }
@@ -289,12 +284,9 @@ StatusType olympics_t::unite_teams(int teamId1, int teamId2)
     }
 
     // remove team1 from the table and the tree, so it can go in with the new strength
-    status = teamsTable->remove(teamId1);
-    if (status != StatusType::SUCCESS)
-    {
-        return status;
-    }
-    status = teamsTree->remove(Pair<int,int>(team1->getStrength(), -teamId1));
+    Pair<int,int> team1Key = Pair<int,int>(team1->getStrength(), -teamId1);
+    int saveWins = this->teamsTree->calc_extra_in_path(team1Key);
+    status = teamsTree->remove(team1Key);
     if (status != StatusType::SUCCESS)
     {
         return status;
@@ -304,17 +296,13 @@ StatusType olympics_t::unite_teams(int teamId1, int teamId2)
     team1->uniteTeams(team2);
 
     // reinsert team1 to the table and the tree with the new strength
-    status = teamsTable->add(team1, teamId1);
+    team1Key.set_first(team1->getStrength());
+    status = teamsTree->insert(team1, team1Key);
+    this->increase_win(team1, saveWins);
     if (status != StatusType::SUCCESS)
     {
         return status;
     }
-    status = teamsTree->insert(team1, Pair<int,int>(team1->getStrength(), -teamId1));
-    if (status != StatusType::SUCCESS)
-    {
-        return status;
-    }
-    numOfTeams--;
 
     return StatusType::SUCCESS;
 }
@@ -345,7 +333,7 @@ output_t<int> olympics_t::play_tournament(int lowPower, int highPower)
     {
         return StatusType::INVALID_INPUT;
     }
-    int numOfSmallerLow = this->teamsTree->get_number_of_smaller_nodes_by_power_min(lowPower);
+    int numOfSmallerLow = this->teamsTree->get_number_of_smaller_nodes_by_power_min(lowPower-1);
     int numOfSmallerHigh = this->teamsTree->get_number_of_smaller_nodes_by_power_max(highPower);
     int numOfTeams = numOfSmallerHigh - numOfSmallerLow;
 
