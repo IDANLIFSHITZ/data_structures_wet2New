@@ -4,10 +4,10 @@
 
 #include "Team.h"
 
-Team::Team(int id) : id(id), playersList(new LinkedList()),
-                     playersTree(new AVL<Player*, Pair<int,int>>()), numOfPlayers(0)
-{
-}
+Team::Team(int id) : id(id),
+                     playersList(new LinkedList()),
+                     playersTree(new AVL<Player*, Pair<int,int>>()),
+                     numOfPlayers(0){}
 
 
 Team::~Team()
@@ -24,13 +24,13 @@ StatusType Team::addPlayer(int strength)
 {
     try
     {
-        Player* player = new Player(numOfPlayers, strength);
+        Player* player = new Player(this->numOfPlayers, strength);
         numOfPlayers++;
         playersList->push(player);
         Pair<int, int> pair(strength, player->getId());
         playersTree->insert(player, pair);
     }
-    catch (const std::bad_alloc& e)
+    catch (const std::bad_alloc& err)
     {
         return StatusType::ALLOCATION_ERROR;
     }

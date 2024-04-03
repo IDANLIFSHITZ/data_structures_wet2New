@@ -139,10 +139,17 @@ private:
                           node->left->maxSubtreeRank : 0;
         int maxRankRight = (node->right != nullptr) ? // get right maxSubtreeRank.
                            node->right->maxSubtreeRank : 0;
-
+        /*
         node->maxSubtreeRank = AVL::max(currRank, AVL::max(maxRankLeft, maxRankRight)); //calc maxSubtreeRank.
         node->maxSubtreeRank += (node->maxSubtreeRank != 0) ?
                                 node->extra : 0;
+        */
+        int max = AVL::max(currRank, AVL::max(maxRankLeft, maxRankRight)); //calc maxSubtreeRank.
+        node->maxSubtreeRank = max;
+        if (max != 0)
+        {
+            node->maxSubtreeRank += node->extra;
+        }
     }
 
     /*
@@ -307,6 +314,7 @@ private:
      */
     Node* balance(Node* nodeToBalance)
     {
+        Node::update_node_height(nodeToBalance);
         int balanceFactor = nodeToBalance->get_balance();
 
         if (balanceFactor == 2)
@@ -337,6 +345,7 @@ private:
                 nodeToBalance = left_rotate(nodeToBalance);
             }
         }
+        this->update_maxSubtreeRank(nodeToBalance);
         return nodeToBalance;
     }
 
@@ -903,9 +912,8 @@ public:
      */
     StatusType remove(keyT key)
     {
-        int extra = 0;
-        Node* nodeToRemove = search_extra_aux(this->root, key, extra); //find node to remove in tree.
-
+        int pathExtra = 0;
+        Node* nodeToRemove = search_extra_aux(this->root, key, pathExtra); //find node to remove in tree.
         if (nodeToRemove == nullptr) //if there is no node with key=key in tree.
         {
             return StatusType::FAILURE;
@@ -920,7 +928,7 @@ public:
             //delete deleteNode.
             deleteNode->left = nullptr;
             deleteNode->right = nullptr;
-            extra -= deleteNode->extra;
+            pathExtra -= deleteNode->extra;
             delete deleteNode;
         }
         else //has both children.
@@ -932,16 +940,16 @@ public:
 
             nodeToRemove->key = nextBiggest->key;
             nodeToRemove->data = nextBiggest->data;
-            nodeToRemove->extra = nextBiggestExtra;
+            nodeToRemove->extra += (nextBiggestExtra - pathExtra); //remember: can chane
 
             if (nodeToRemove->left != nullptr)
             {
-                nodeToRemove->left->extra -= nextBiggestExtra - extra;
+                nodeToRemove->left->extra -= nextBiggestExtra - pathExtra;
                 this->update_maxSubtreeRank(nodeToRemove->left);
             }
             if (nodeToRemove->right != nullptr)
             {
-                nodeToRemove->right->extra -= nextBiggestExtra - extra;
+                nodeToRemove->right->extra -= nextBiggestExtra - pathExtra;
                 this->update_maxSubtreeRank(nodeToRemove->right);
             }
 
@@ -949,26 +957,29 @@ public:
             nodeToRemove = nextBiggest->parent;
             nextBiggest->left = nullptr;
             nextBiggest->right = nullptr;
-            extra = nextBiggestExtra;
+            pathExtra = nextBiggestExtra;
 
             delete nextBiggest;
         }
 
         // climb up the tree to the root and update and balance.
+        Node* currNode = nodeToRemove;
         while (nodeToRemove != nullptr)
         {
-            Node::update_node_height(nodeToRemove);
-            Node::update_subtreeSize(nodeToRemove);
-            this->update_maxSubtreeRank(nodeToRemove);
-            nodeToRemove = this->balance(nodeToRemove);
+            Node::update_node_height(currNode);
+            Node::update_subtreeSize(currNode);
+            this->update_maxSubtreeRank(currNode);
+            currNode = this->balance(currNode);
 
-            nodeToRemove = nodeToRemove->parent;
+            currNode = currNode->parent;
         }
 
         this->numOfNodes--;
         if (numOfNodes == 0)
         {
             this->root = nullptr;
+            this->minNode = nullptr;
+            this->maxNode = nullptr;
         }
         else
         {
