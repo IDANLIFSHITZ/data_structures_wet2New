@@ -16,6 +16,7 @@ private:
     LinkedList* playersList;
     AVL<Player*, Pair<int,int>>* playersTree;
     int numOfPlayers;
+    int strength;
 public:
 
     Team() = default;
@@ -38,6 +39,8 @@ public:
 
     int getId() const;
     int getNumOfPlayers() const;
+
+    void updateStrength();
     int getStrength() const;
 
 

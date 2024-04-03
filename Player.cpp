@@ -20,7 +20,7 @@ int Player::setId(int newId)
 
 int Player::getStrength() const
 {
-    return strength;
+    return this->strength;
 }
 
 bool Player::operator<(const Player& other) const

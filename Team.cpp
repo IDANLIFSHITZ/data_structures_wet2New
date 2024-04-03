@@ -4,11 +4,57 @@
 
 #include "Team.h"
 
+/*
+ * helper functions:
+ */
+
+StatusType mergeArrays(Player** arr1, int size1, Player** arr2, int size2, Player** mergedPlayerArr, Pair<int,int>* mergedKeysArr){
+    int indexArr1 = 0, indexArr2 = 0, indexNew = 0;
+    while (indexArr1 < size1 && indexArr2 < size2)
+    {
+        if (*arr1[indexArr1] < *arr2[indexArr2])
+        {
+            mergedPlayerArr[indexNew] = arr1[indexArr1];
+            Pair<int,int> pair(arr1[indexArr1]->getStrength(), arr1[indexArr1]->getId());
+            mergedKeysArr[indexNew++] = pair;
+            indexArr1++;
+        }
+        else
+        {
+            mergedPlayerArr[indexNew] = arr2[indexArr2];
+            Pair<int,int> pair(arr2[indexArr2]->getStrength(), arr2[indexArr2]->getId());
+            mergedKeysArr[indexNew++] = pair;
+            indexArr2++;
+        }
+    }
+    while (indexArr1 < size1)
+    {
+        mergedPlayerArr[indexNew] = arr1[indexArr1];
+        Pair<int,int> pair(arr1[indexArr1]->getStrength(), arr1[indexArr1]->getId());
+        mergedKeysArr[indexNew] = pair;
+        indexArr1++;
+        indexNew++;
+    }
+    while (indexArr2 < size2)
+    {
+        mergedPlayerArr[indexNew] = arr2[indexArr2];
+        Pair<int,int> pair(arr2[indexArr2]->getStrength(), arr2[indexArr2]->getId());
+        mergedKeysArr[indexNew] = pair;
+        indexArr2++;
+        indexNew++;
+    }
+    return StatusType::SUCCESS;
+}
+
+/*
+ * public functions:
+ */
+
 Team::Team(int id) : id(id),
                      playersList(new LinkedList()),
                      playersTree(new AVL<Player*, Pair<int,int>>()),
-                     numOfPlayers(0){}
-
+                     numOfPlayers(0),
+                     strength(0){}
 
 Team::~Team()
 {
@@ -29,12 +75,13 @@ StatusType Team::addPlayer(int strength)
         playersList->push(player);
         Pair<int, int> pair(strength, player->getId());
         playersTree->insert(player, pair);
+        this->updateStrength();
+        return StatusType::SUCCESS;
     }
     catch (const std::bad_alloc& err)
     {
         return StatusType::ALLOCATION_ERROR;
     }
-    return StatusType::SUCCESS;
 }
 
 StatusType Team::removeNewestPlayer()
@@ -47,6 +94,7 @@ StatusType Team::removeNewestPlayer()
     playersList->pop();
     playersTree->remove(pair);
     numOfPlayers--;
+    this->updateStrength();
     return StatusType::SUCCESS;
 }
 
@@ -140,44 +188,8 @@ StatusType Team::uniteTeams(Team* other){
 
     delete[] unitedPlayersArray;
     delete[] unitedKeysArray;
-    return StatusType::SUCCESS;
-}
 
-StatusType mergeArrays(Player** arr1, int size1, Player** arr2, int size2, Player** mergedPlayerArr, Pair<int,int>* mergedKeysArr){
-    int indexArr1 = 0, indexArr2 = 0, indexNew = 0;
-    while (indexArr1 < size1 && indexArr2 < size2)
-    {
-        if (*arr1[indexArr1] < *arr2[indexArr2])
-        {
-            mergedPlayerArr[indexNew] = arr1[indexArr1];
-            Pair<int,int> pair(arr1[indexArr1]->getStrength(), arr1[indexArr1]->getId());
-            mergedKeysArr[indexNew++] = pair;
-            indexArr1++;
-        }
-        else
-        {
-            mergedPlayerArr[indexNew] = arr2[indexArr2];
-            Pair<int,int> pair(arr2[indexArr2]->getStrength(), arr2[indexArr2]->getId());
-            mergedKeysArr[indexNew++] = pair;
-            indexArr2++;
-        }
-    }
-    while (indexArr1 < size1)
-    {
-        mergedPlayerArr[indexNew] = arr1[indexArr1];
-        Pair<int,int> pair(arr1[indexArr1]->getStrength(), arr1[indexArr1]->getId());
-        mergedKeysArr[indexNew] = pair;
-        indexArr1++;
-        indexNew++;
-    }
-    while (indexArr2 < size2)
-    {
-        mergedPlayerArr[indexNew] = arr2[indexArr2];
-        Pair<int,int> pair(arr2[indexArr2]->getStrength(), arr2[indexArr2]->getId());
-        mergedKeysArr[indexNew] = pair;
-        indexArr2++;
-        indexNew++;
-    }
+    this->updateStrength();
     return StatusType::SUCCESS;
 }
 
@@ -187,6 +199,16 @@ int Team::getStrength() const
     {
         return 0;
     }
-    Player* player = playersTree->get_median();
-    return player->getStrength() * numOfPlayers;
+    return this->strength;
+}
+
+void Team::updateStrength()
+{
+    if (numOfPlayers == 0)
+    {
+        this->strength = 0;
+        return;
+    }
+    Player* player = this->playersTree->get_median();
+    this->strength = player->getStrength() * this->numOfPlayers;
 }

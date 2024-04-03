@@ -1199,17 +1199,7 @@ public:
     /*
      * returns number of smaller teams of min node with power=
      */
-    int get_number_of_smaller_nodes_by_power_min(int forceToSearch) const
-    {
-        int numOfSmaller = 0;
-        Node* currNode = this->search_by_force(this->root, forceToSearch, numOfSmaller);
-        return  numOfSmaller + this->get_number_of_smaller_nodes_of_next_max_force(currNode, forceToSearch);
-    }
-
-    /*
-     * returns number of smaller teams of max node with power=
-     */
-    int get_number_of_smaller_nodes_by_power_max(int forceToSearch) const
+    int get_number_of_smaller_nodes_by_force(int forceToSearch) const
     {
         int numOfSmaller = 0;
         Node* currNode = this->search_by_force(this->root, forceToSearch, numOfSmaller);
