@@ -157,6 +157,7 @@ StatusType hashTable::resize(int newSize)
         table = nullptr;
         maxSize = 0;
         currSize = 0;
+        return  StatusType::SUCCESS;
     }
 
     Team** TeamsArray;
