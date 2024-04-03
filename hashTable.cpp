@@ -67,7 +67,7 @@ StatusType hashTable::add(Team* value, int key)
             pointerToTree->insert(value, key);
             table[0] = pointerToTree;
         }
-        catch (const std::bad_alloc& e)
+        catch (const std::bad_alloc& err)
         {
             delete[] table;
             return StatusType::ALLOCATION_ERROR;
@@ -84,10 +84,10 @@ StatusType hashTable::add(Team* value, int key)
     }
 
     // check resize
-    if (currSize >= maxSize/2)
+    if (currSize == maxSize)
     {
-        StatusType s = resize(maxSize * 2);
-        if (s == StatusType::ALLOCATION_ERROR)
+        StatusType status = resize(maxSize * 2);
+        if (status == StatusType::ALLOCATION_ERROR)
         {
             return StatusType::ALLOCATION_ERROR;
         }
