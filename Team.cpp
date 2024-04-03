@@ -113,11 +113,7 @@ StatusType Team::uniteTeams(Team* other){
 
     //merge players arrays and delete old arrays after merge.
     mergeArrays(myPlayersArray, mySize, otherPlayersArray, otherSize, unitedPlayersArray, unitedKeysArray);
-    for (int i = 0; i < mySize+otherSize; i++)
-    {
-        Player* player = unitedPlayersArray[i];
-        int x = 0;
-    }
+
     delete[] myPlayersArray;
     delete[] otherPlayersArray;
     delete[] myKeysArray;
@@ -151,9 +147,8 @@ StatusType mergeArrays(Player** arr1, int size1, Player** arr2, int size2, Playe
     int indexArr1 = 0, indexArr2 = 0, indexNew = 0;
     while (indexArr1 < size1 && indexArr2 < size2)
     {
-        Player* p1 = arr1[indexArr1];
-        Player* p2 = arr2[indexArr2];
-        if (arr1[indexArr1] < arr2[indexArr2])
+
+        if (*arr1[indexArr1] < *arr2[indexArr2])
         {
             mergedPlayerArr[indexNew] = arr1[indexArr1];
             Pair<int,int> pair(arr1[indexArr1]->getStrength(), arr1[indexArr1]->getId());
