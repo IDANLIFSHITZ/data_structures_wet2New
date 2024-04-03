@@ -10,8 +10,8 @@ void olympics_t::increase_win(Team* team, int change)
     Pair<int,int> teamKey = Pair<int,int>(team->getStrength(), -team->getId());
     this->teamsTree->update_extra(teamKey, change);
     int numOfSmallerTeams = this->teamsTree->get_num_of_smaller_nodes( teamKey);
-    output_t<Team*> nextSmallestTeam = this->teamsTree->search_number_of_smaller_nodes(numOfSmallerTeams-1);
 
+    output_t<Team*> nextSmallestTeam = this->teamsTree->search_number_of_smaller_nodes(numOfSmallerTeams-1);
     if (nextSmallestTeam.status() == StatusType::SUCCESS)
     {
         Pair<int,int> nextSmallestTeamKey = Pair<int,int>(nextSmallestTeam.ans()->getStrength(), -nextSmallestTeam.ans()->getId());
@@ -37,7 +37,6 @@ olympics_t::~olympics_t()
     // deletes the tree and its nodes
     delete teamsTree;
 }
-
 
 StatusType olympics_t::add_team(int teamId)
 {
@@ -318,19 +317,20 @@ output_t<int> olympics_t::play_tournament(int lowPower, int highPower)
     {
         return StatusType::FAILURE;
     }
-
     if (numOfTeams == 1) //if only one team in tournament.
     {
         return this->teamsTree->search_number_of_smaller_nodes(numOfSmallerHigh).ans()->getId();
     }
-
+    //play tournament.
+    Team* highTeam = this->teamsTree->search_number_of_smaller_nodes(numOfSmallerHigh).ans();
+    Pair<int,int> highTeamKey = Pair<int,int>(highTeam->getStrength(),- highTeam->getId());
     for (int round = numOfTeams /2; round >= 1; round /= 2)
     {
+        //get highest team from half weakest teams of the tournaments.
         Team* lowTeam = this->teamsTree->search_number_of_smaller_nodes(numOfSmallerHigh-round).ans();
-        Team* highTeam = this->teamsTree->search_number_of_smaller_nodes(numOfSmallerHigh).ans();
         Pair<int,int> lowTeamKey = Pair<int,int>(lowTeam->getStrength(), -lowTeam->getId());
-        Pair<int,int> highTeamKey = Pair<int,int>(highTeam->getStrength(),- highTeam->getId());
+        //update win to half top teams in the tournaments.
         teamsTree->update_extra_in_range(lowTeamKey, highTeamKey, 1);
     }
-    return teamsTree->search_number_of_smaller_nodes(numOfSmallerHigh).ans()->getId();
+    return highTeam->getId();
 }
