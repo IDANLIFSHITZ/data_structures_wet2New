@@ -1159,21 +1159,21 @@ public:
                               currNode->left->subtreeSize+1 : 1;
         while (currNode != nullptr)
         {
-            if (currNumOfSmallerSize < numOfSmaller)
+            if (currNumOfSmallerSize < numOfSmaller) //if node is in right subtree.
             {
-                int add = (currNode->right->left != nullptr) ?
-                          currNode->right->left->subtreeSize + 1 : 1;
                 currNode = currNode->right;
-                currNumOfSmallerSize += add;
+                int add = (currNode->left != nullptr) ?
+                          currNode->left->subtreeSize + 1 : 1;
+                currNumOfSmallerSize += add; //add to currNumOfSmallerSize nodes in left subtree when turn right.
             }
-            else if (currNumOfSmallerSize > numOfSmaller)
+            else if (currNumOfSmallerSize > numOfSmaller) //else if node is in right subtree.
             {
-                int subtract = (currNode->left->right != nullptr) ?
-                          currNode->left->right->subtreeSize + 1 : 1;
                 currNode = currNode->left;
-                currNumOfSmallerSize -= subtract;
+                int subtract = (currNode->right != nullptr) ?
+                          currNode->right->subtreeSize + 1 : 1;
+                currNumOfSmallerSize -= subtract; //subtract from currNumOfSmallerSize nodes in right subtree when turn left.
             }
-            else
+            else //else, found node.
             {
                 return output_t<valT>(currNode->data);
             }

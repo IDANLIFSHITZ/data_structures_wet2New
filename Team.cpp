@@ -64,156 +64,122 @@ StatusType Team::uniteTeams(Team* other){
     int otherSize = other->playersTree->get_size();
     int unitedSize = mySize + otherSize;
 
-    Player** myPlayersArray;
-    Player** otherPlayersArray;
-    Pair<int,int>* myKeysArray;
-    Pair<int,int>* otherKeysArray;
+    Player** myPlayersArray = nullptr;
+    Player** otherPlayersArray = nullptr;
+    Pair<int,int>* myKeysArray = nullptr;
+    Pair<int,int>* otherKeysArray = nullptr;
 
     try
     {
         myPlayersArray = new Player*[mySize];
-    }
-    catch (const std::bad_alloc& e)
-    {
-        return StatusType::ALLOCATION_ERROR;
-    }
-    try
-    {
         otherPlayersArray = new Player*[otherSize];
-    }
-    catch (const std::bad_alloc& e)
-    {
-        delete[] myPlayersArray;
-        return StatusType::ALLOCATION_ERROR;
-    }
-    try
-    {
         myKeysArray = new Pair<int,int>[mySize];
-    }
-    catch (const std::bad_alloc& e)
-    {
-        delete[] myPlayersArray;
-        delete[] otherPlayersArray;
-        return StatusType::ALLOCATION_ERROR;
-    }
-    try
-    {
         otherKeysArray = new Pair<int,int>[otherSize];
     }
-    catch (const std::bad_alloc& e)
+    catch (const std::bad_alloc& err)
     {
         delete[] myPlayersArray;
         delete[] otherPlayersArray;
         delete[] myKeysArray;
+        delete[] otherKeysArray;
         return StatusType::ALLOCATION_ERROR;
     }
 
-    Pair<Player**, Pair<int,int>* > myArrays (myPlayersArray, myKeysArray);
-    Pair<Player**, Pair<int,int>* > otherArrays (otherPlayersArray, otherKeysArray);
+    //fill arrays from trees.
+    this->playersTree->tree_to_sorted_array(myPlayersArray, myKeysArray);
+    other->playersTree->tree_to_sorted_array(otherPlayersArray, otherKeysArray);
 
-    Player** unitedPlayersArray;
-    Pair<int,int>* unitedKeysArray;
-
-
-    playersTree->tree_to_sorted_array(myArrays.get_first(), myArrays.get_second());
-
-
-    other->playersTree->tree_to_sorted_array(otherArrays.get_first(), otherArrays.get_second());
-
+    //create new arrays for merge.
+    Player** unitedPlayersArray = nullptr;
+    Pair<int,int>* unitedKeysArray = nullptr;
     try
     {
         unitedPlayersArray = new Player*[mySize + otherSize];
-    }
-    catch (const std::bad_alloc& e)
-    {
-        deleteArraysFromPair(&myArrays);
-        deleteArraysFromPair(&otherArrays);
-        return StatusType::ALLOCATION_ERROR;
-    }
-    try
-    {
         unitedKeysArray = new Pair<int,int>[mySize + otherSize];
     }
-    catch (const std::bad_alloc& e)
+    catch (const std::bad_alloc& err)
     {
-        deleteArraysFromPair(&myArrays);
-        deleteArraysFromPair(&otherArrays);
+        delete[] myPlayersArray;
+        delete[] otherPlayersArray;
+        delete[] myKeysArray;
+        delete[] otherKeysArray;
         delete[] unitedPlayersArray;
+        delete[] unitedKeysArray;
         return StatusType::ALLOCATION_ERROR;
     }
 
-    mergeArrays(myArrays.get_first(), mySize, otherArrays.get_first(), otherSize, unitedPlayersArray, unitedKeysArray);
+    //merge players arrays and delete old arrays after merge.
+    mergeArrays(myPlayersArray, mySize, otherPlayersArray, otherSize, unitedPlayersArray, unitedKeysArray);
+    for (int i = 0; i < mySize+otherSize; i++)
+    {
+        Player* player = unitedPlayersArray[i];
+        int x = 0;
+    }
+    delete[] myPlayersArray;
+    delete[] otherPlayersArray;
+    delete[] myKeysArray;
+    delete[] otherKeysArray;
 
-    deleteArraysFromPair(&myArrays);
-    deleteArraysFromPair(&otherArrays);
-
-    delete playersTree;
-
+    //delete old tree to replace with merged tree and update size.
+    delete this->playersTree;
     try
     {
-        playersTree = new AVL<Player *, Pair<int, int>>(unitedPlayersArray, unitedKeysArray, unitedSize);
+        this->playersTree = new AVL<Player *, Pair<int, int>>(unitedPlayersArray, unitedKeysArray, unitedSize);
+        this->numOfPlayers = this->playersList->size;
     }
-    catch (const std::bad_alloc& e)
+    catch (const std::bad_alloc& err)
     {
         delete[] unitedPlayersArray;
         delete[] unitedKeysArray;
         return StatusType::ALLOCATION_ERROR;
     }
 
-    delete other->playersList;
-    other->playersList = nullptr;
-
+    //delete other team.
     delete other->playersTree;
     other->playersTree = nullptr;
+    delete other;
 
     delete[] unitedPlayersArray;
     delete[] unitedKeysArray;
-
-    this->numOfPlayers = this->playersList->size;
     return StatusType::SUCCESS;
 }
-
-StatusType deleteArraysFromPair(const Pair<Player**, Pair<int,int>* >* pair)
-{
-    Player** playersArray = pair->get_first();
-    Pair<int,int>* keysArray = pair->get_second();
-
-    delete[] playersArray;
-    delete[] keysArray;
-
-    return StatusType::SUCCESS;
-}
-
 
 StatusType mergeArrays(Player** arr1, int size1, Player** arr2, int size2, Player** mergedPlayerArr, Pair<int,int>* mergedKeysArr){
-    int i = 0, j = 0, k = 0;
-    while (i < size1 && j < size2){
-        if (arr1[i] < arr2[j]){
-            mergedPlayerArr[k] = arr1[i];
-            Pair<int,int> pair(arr1[i]->getStrength(), arr1[i]->getId());
-            mergedKeysArr[k] = pair;
-            i++;
-        } else {
-            mergedPlayerArr[k] = arr2[j];
-            Pair<int,int> pair(arr1[j]->getStrength(), arr1[j]->getId());
-            mergedKeysArr[k] = pair;
-            j++;
+    int indexArr1 = 0, indexArr2 = 0, indexNew = 0;
+    while (indexArr1 < size1 && indexArr2 < size2)
+    {
+        Player* p1 = arr1[indexArr1];
+        Player* p2 = arr2[indexArr2];
+        if (arr1[indexArr1] < arr2[indexArr2])
+        {
+            mergedPlayerArr[indexNew] = arr1[indexArr1];
+            Pair<int,int> pair(arr1[indexArr1]->getStrength(), arr1[indexArr1]->getId());
+            mergedKeysArr[indexNew++] = pair;
+            indexArr1++;
         }
-        k++;
+        else
+        {
+            mergedPlayerArr[indexNew] = arr2[indexArr2];
+            Pair<int,int> pair(arr2[indexArr2]->getStrength(), arr2[indexArr2]->getId());
+            mergedKeysArr[indexNew++] = pair;
+            indexArr2++;
+        }
     }
-    while (i < size1){
-        mergedPlayerArr[k] = arr1[i];
-        Pair<int,int> pair(arr1[i]->getStrength(), arr1[i]->getId());
-        mergedKeysArr[k] = pair;
-        i++;
-        k++;
+    while (indexArr1 < size1)
+    {
+        mergedPlayerArr[indexNew] = arr1[indexArr1];
+        Pair<int,int> pair(arr1[indexArr1]->getStrength(), arr1[indexArr1]->getId());
+        mergedKeysArr[indexNew] = pair;
+        indexArr1++;
+        indexNew++;
     }
-    while (j < size2){
-        mergedPlayerArr[k] = arr2[j];
-        Pair<int,int> pair(arr2[j]->getStrength(), arr2[j]->getId());
-        mergedKeysArr[k] = pair;
-        j++;
-        k++;
+    while (indexArr2 < size2)
+    {
+        mergedPlayerArr[indexNew] = arr2[indexArr2];
+        Pair<int,int> pair(arr2[indexArr2]->getStrength(), arr2[indexArr2]->getId());
+        mergedKeysArr[indexNew] = pair;
+        indexArr2++;
+        indexNew++;
     }
     return StatusType::SUCCESS;
 }

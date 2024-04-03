@@ -168,6 +168,7 @@ StatusType olympics_t::remove_newest_player(int teamId)
 
     // remove the player from the team
     StatusType status = teamToRemovePlayer->removeNewestPlayer();
+
     //return team to teamsTree.
     teamKey.set_first(teamToRemovePlayer->getStrength());
     this->teamsTree->insert(teamToRemovePlayer, teamKey);
@@ -175,7 +176,6 @@ StatusType olympics_t::remove_newest_player(int teamId)
     {
         return status;
     }
-
 
     this->increase_win(teamToRemovePlayer, saveWins);
 	return StatusType::SUCCESS;
